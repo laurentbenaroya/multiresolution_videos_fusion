@@ -1,0 +1,8 @@
+__pycache__/
+video/
+images/
+output/
+.git/
+.idea/
+misc.py
+```
