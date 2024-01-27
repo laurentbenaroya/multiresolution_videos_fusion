@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from os.path import join, basename, dirname
+from os.path import join
 import os
 from glob import glob
 from tqdm import tqdm
@@ -108,7 +108,6 @@ def main(args):
             lap_pyr_image1 = build_laplacian_pyramid(image1[:, :, c], levels=n_levels)
             lap_pyr_image2 = build_laplacian_pyramid(image2[:, :, c], levels=n_levels)
             # fusion
-            # import pdb; pdb.set_trace()
             fused_image_c = [(beta[level] * pyr_image1 + (1.-beta[level]) * pyr_image2)
                              for level, (pyr_image1, pyr_image2) in enumerate(zip(lap_pyr_image1, lap_pyr_image2))]
             # decode
@@ -128,6 +127,13 @@ def main(args):
     for img in os.listdir(args.output):
         if img.endswith('.png'):
             os.remove(join(args.output, img))
+    # remove tmp folders
+    for img in os.listdir('./tmp1'):
+        os.remove(f'./tmp1/{img}')
+    os.rmdir('./tmp1')
+    for img in os.listdir('./tmp2'):
+        os.remove(f'./tmp2/{img}')
+    os.rmdir('./tmp2')
 
 
 if __name__ == '__main__':
