@@ -6,7 +6,7 @@ from glob import glob
 from tqdm import tqdm
 import argparse
 
-from utils import video2frames
+from concatvideos import video2frames
 from multiresolution import build_laplacian_pyramid, reconstruct_from_laplacian_pyramid
 
 """
