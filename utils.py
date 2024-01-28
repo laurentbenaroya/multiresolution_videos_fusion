@@ -78,4 +78,17 @@ def video2frames(video_path, output_path):
 
 
 if __name__ == "__main__":
-    display_videos(['video/Attal_wav2lip_gan.mp4', 'video/Attal.mp4'])
+    import argparse
+    parser = argparse.ArgumentParser(description='concatenate videos side by side',
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--videos', nargs='+', help='list of video paths', required=True)
+    args = parser.parse_args()
+    # check if videos exist
+    for video in args.videos:
+        assert os.path.exists(video), f'video {video} does not exist'
+        # check if video is readable
+        cap = cv2.VideoCapture(video)
+        assert cap.isOpened(), f'video {video} is not readable'
+        cap.release()
+
+    display_videos(args.videos)
